@@ -1,0 +1,29 @@
+<wsdl:definitions
+     name="insertPerson_dbRef"
+     targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/PersonCRUD/PersonCRUDProject/insertPerson_dbRef"
+     xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/PersonCRUD/PersonCRUDProject/insertPerson_dbRef"
+     xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/insertPerson_dbRef"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+  <plt:partnerLinkType name="insertPerson_dbRef_plt" >
+    <plt:role name="insertPerson_dbRef_role" >
+      <plt:portType name="tns:insertPerson_dbRef_ptt" />
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema" >
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/insertPerson_dbRef" schemaLocation="../Schemas/insertPerson_dbRef_table.xsd" />
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="PersonCollection_msg">
+        <wsdl:part name="PersonCollection" element="top:PersonCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="insertPerson_dbRef_ptt">
+        <wsdl:operation name="insert">
+            <wsdl:input message="tns:PersonCollection_msg"/>
+            <wsdl:output message="tns:PersonCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

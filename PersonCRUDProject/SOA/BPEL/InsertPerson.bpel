@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Sun Apr 03 13:49:10 BRT 2016
+  Author:  Adriano
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="InsertPerson"
+               targetNamespace="http://xmlns.oracle.com/PersonCRUD/PersonCRUDProject/InsertPerson"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/PersonCRUD/PersonCRUDProject/InsertPerson"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/db/PersonCRUD/PersonCRUDProject/dbPerson"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/top/dbPerson" xml:id="id_1"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/PersonCRUD/PersonCRUDProject/insertPerson_dbRef"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/top/insertPerson_dbRef">
+
+    <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/PersonCRUD/PersonCRUDProject/InsertPerson" location="../WSDLs/InsertPerson.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"
+            xml:id="id_2"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks xml:id="id_3">
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="insertperson_client" partnerLinkType="client:InsertPerson" myRole="InsertPersonProvider"
+                 xml:id="id_4"/>
+    <partnerLink name="insertPerson_dbRef" partnerLinkType="ns3:insertPerson_dbRef_plt"
+                 partnerRole="insertPerson_dbRef_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables xml:id="id_6">
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:InsertPersonRequestMessage" xml:id="id_7"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:InsertPersonResponseMessage" xml:id="id_8"/>
+    <variable name="InvokeInsertPerson_insert_InputVariable" messageType="ns3:PersonCollection_msg"/>
+    <variable name="InvokeInsertPerson_insert_OutputVariable" messageType="ns3:PersonCollection_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main" xml:id="id_11">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in InsertPerson.wsdl) -->
+    <receive name="receiveInput" partnerLink="insertperson_client" portType="client:InsertPerson" operation="process" variable="inputVariable" createInstance="yes"
+             xml:id="id_12"/>
+    <assign name="AssignInsertPerson">
+      <copy>
+        <from>$inputVariable.payload/client:name</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInsertPerson_insert_InputVariable.PersonCollection/ns4:Person/ns4:name</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/client:surname</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInsertPerson_insert_InputVariable.PersonCollection/ns4:Person/ns4:surname</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/client:age</from>
+        <to expressionLanguage="urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0">$InvokeInsertPerson_insert_InputVariable.PersonCollection/ns4:Person/ns4:age</to>
+      </copy>
+    </assign>
+    <invoke name="InvokeInsertPerson" partnerLink="insertPerson_dbRef"
+            portType="ns3:insertPerson_dbRef_ptt" operation="insert"
+            inputVariable="InvokeInsertPerson_insert_InputVariable"
+            outputVariable="InvokeInsertPerson_insert_OutputVariable" bpelx:invokeAsDetail="no"/>
+    <assign name="TransformationOutput">
+      <bpelx:annotation>
+        <bpelx:pattern patternName="bpelx:transformation"></bpelx:pattern>
+      </bpelx:annotation>
+      <copy>
+        <from>ora:doXSLTransformForDoc("../Transformations/Transformation_1.xsl", $InvokeInsertPerson_insert_OutputVariable.PersonCollection)</from>
+        <to variable="outputVariable" part="payload"/>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="insertperson_client" portType="client:InsertPerson" operation="process" variable="outputVariable"
+           xml:id="id_24"/>
+  </sequence>
+</process>

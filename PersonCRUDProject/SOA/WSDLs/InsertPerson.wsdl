@@ -1,0 +1,30 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="InsertPerson"
+     targetNamespace="http://xmlns.oracle.com/PersonCRUD/PersonCRUDProject/InsertPerson"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/PersonCRUD/PersonCRUDProject/InsertPerson"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+    >
+    <plnk:partnerLinkType name="InsertPerson">
+        <plnk:role name="InsertPersonProvider" portType="client:InsertPerson"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/PersonCRUD/PersonCRUDProject/InsertPerson"
+                 schemaLocation="../Schemas/InsertPerson.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="InsertPersonRequestMessage">
+        <wsdl:part name="payload" element="client:person"/>
+    </wsdl:message>
+    <wsdl:message name="InsertPersonResponseMessage">
+        <wsdl:part name="payload" element="client:processResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="InsertPerson">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:InsertPersonRequestMessage"/>
+            <wsdl:output message="client:InsertPersonResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

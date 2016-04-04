@@ -1,0 +1,24 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="PERSON.AGE:db_column_not_null">false</entry>
+   <entry key="PERSON.NAME:db_column_type">VARCHAR2</entry>
+   <entry key="PERSON.AGE:db_column_precision">5</entry>
+   <entry key="PERSON.SURNAME:db_column_size">45</entry>
+   <entry key="PERSON.ID:db_column_scale">0</entry>
+   <entry key="PERSON:db_column_3">AGE</entry>
+   <entry key="PERSON:db_column_2">NAME</entry>
+   <entry key="PERSON:db_column_1">SURNAME</entry>
+   <entry key="PERSON:db_column_0">ID</entry>
+   <entry key="PERSON.NAME:db_column_size">45</entry>
+   <entry key="PERSON.ID:db_column_type">NUMBER</entry>
+   <entry key="PERSON.NAME:db_column_not_null">false</entry>
+   <entry key="PERSON.ID:db_column_precision">10</entry>
+   <entry key="root_descriptor_alias">PERSON</entry>
+   <entry key="PERSON.AGE:db_column_type">NUMBER</entry>
+   <entry key="PERSON.SURNAME:db_column_type">VARCHAR2</entry>
+   <entry key="PERSON:db_table_type">TABLE</entry>
+   <entry key="PERSON.AGE:db_column_scale">0</entry>
+   <entry key="PERSON.SURNAME:db_column_not_null">false</entry>
+   <entry key="PERSON.ID:db_column_not_null">false</entry>
+</properties>

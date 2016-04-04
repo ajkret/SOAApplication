@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="person:db_column_3">age</entry>
+   <entry key="person:db_column_2">surname</entry>
+   <entry key="person.name:db_column_type">VARCHAR</entry>
+   <entry key="person.surname:db_column_type">VARCHAR</entry>
+   <entry key="person:db_column_1">name</entry>
+   <entry key="person:db_column_0">id</entry>
+   <entry key="person.age:db_column_size">10</entry>
+   <entry key="person.id:db_column_size">10</entry>
+   <entry key="person.age:db_column_not_null">false</entry>
+   <entry key="person.name:db_column_size">45</entry>
+   <entry key="person.surname:db_column_size">45</entry>
+   <entry key="person:db_table_type">TABLE</entry>
+   <entry key="person.name:db_column_not_null">true</entry>
+   <entry key="root_descriptor_alias">person</entry>
+   <entry key="person.age:db_column_type">INT</entry>
+   <entry key="person.id:db_column_not_null">true</entry>
+   <entry key="person.surname:db_column_not_null">true</entry>
+   <entry key="person.id:db_column_type">INT</entry>
+</properties>

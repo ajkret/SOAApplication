@@ -1,0 +1,15 @@
+<adapter-config name="insertPerson_dbRef" adapter="db" wsdlLocation="../WSDLs/insertPerson_dbRef.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory UIConnectionName="OracleXE" location="eis/DB/OracleXE"/>
+  <endpoint-interaction portType="insertPerson_dbRef_ptt" operation="insert">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="insertPerson_dbRef.Person"/>
+      <property name="DmlType" value="insert"/>
+      <property name="OutputCompletedXml" value="true"/>
+      <property name="MappingsMetaDataURL" value="insertPerson_dbRef-or-mappings.xml"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+      <property name="DetectOmissions" value="true"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
